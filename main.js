@@ -10,12 +10,35 @@ function displayCards(){
   var deck = newDeck();
   var shuffledCards = shuffleCards(deck);
 
+  if (document.getElementById("super-container").childNodes[3].id === "container") {
+
+    showCards.style.visibility = "hidden";
+    var newItem = document.createElement('button');
+    var textNode = document.createTextNode('Re-deal!');
+    newItem.appendChild(textNode);
+    // newItem.setAttribute('onclick' , "displayCards();");
+
+    newItem.onclick = function(){
+      var cardContainer = document.getElementById('container');
+      cardContainer.innerHTML = "";
+      displayCards();
+    };
+
+
+    //make redeal butt
+    var container = document.getElementById("super-container");
+    container.insertBefore(newItem, container.childNodes[3]);
+    //hide deal button
+    console.log("in if statement " + container);
+  }
+
   for(var i=0; i < deck.length; i++){
     var card = document.createElement('div');
     card.className = "card";
     var cardContainer = document.getElementById('container');
     cardContainer.appendChild(card);
     card.style.backgroundImage = "url(images/" + shuffledCards[i].suit + "-" + shuffledCards[i].card + ".png" + ")";
+    // console.log('in display loops');
 
   }
 
@@ -23,8 +46,11 @@ function displayCards(){
 }
 
 function reset(){
-document.getElementById("container").innerHTML = "";
-document.getElementById("reset").style.visibility = "hidden";
+  document.getElementById("container").innerHTML = "";
+  document.getElementById("reset").style.visibility = "hidden";
+  showCards.style.visibility = "visible";
+  var redeal = document.getElementById('super-container').childNodes[3];
+  document.getElementById('super-container').removeChild(redeal);
 }
 
 
